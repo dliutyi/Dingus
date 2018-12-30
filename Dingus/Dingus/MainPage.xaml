@@ -4,11 +4,4 @@
              xmlns:local="clr-namespace:Dingus"
              x:Class="Dingus.MainPage">
 
-    <StackLayout>
-        <!-- Place new controls here -->
-        <Label Text="Hello, Dingus!" 
-           HorizontalOptions="Center"
-           VerticalOptions="CenterAndExpand" />
-    </StackLayout>
-
 </ContentPage>
