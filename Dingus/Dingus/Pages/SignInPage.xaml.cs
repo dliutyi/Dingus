@@ -4,14 +4,17 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Xamarin.Forms;
+using Dingus.ViewModels;
 
-namespace Dingus
+namespace Dingus.Pages
 {
-    public partial class MainPage : ContentPage
+    public partial class SignInPage : ContentPage
     {
-        public MainPage()
+        public SignInPage()
         {
             InitializeComponent();
+
+            BindingContext = new SignInViewModel();
         }
     }
 }

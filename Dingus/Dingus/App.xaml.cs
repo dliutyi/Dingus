@@ -2,6 +2,8 @@
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
+using Dingus.Pages;
+
 [assembly: XamlCompilation(XamlCompilationOptions.Compile)]
 namespace Dingus
 {
@@ -11,7 +13,7 @@ namespace Dingus
         {
             InitializeComponent();
 
-            MainPage = new MainPage();
+            MainPage = new SignInPage();
         }
 
         protected override void OnStart()
