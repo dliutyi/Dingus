@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Windows.Input;
 using Dingus.Models;
+using Dingus.Pages;
 using Dingus.Services;
 using Xamarin.Forms;
 
@@ -26,7 +27,7 @@ namespace Dingus.ViewModels
         public void InitializeCommands()
         {
             SignInCommand = new Command(() => { App.Current.MainPage.DisplayAlert("Notification", "SignIn command", "OK"); });
-            SignUpCommand = new Command(() => { App.Current.MainPage.DisplayAlert("Notification", "SignUp command", "OK"); });
+            SignUpCommand = new Command(() => { App.Current.MainPage.Navigation.PushAsync(new SignUpPage()); });
         }
 
         public List<User> Users
