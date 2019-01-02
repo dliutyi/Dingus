@@ -1,12 +1,17 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="Dingus.Pages.SignUpPage" Title="Sign Up">
+             x:Class="Dingus.Pages.SignUpPage" Title="Sign Up"
+             xmlns:behavior="clr-namespace:Dingus.Behaviors">
     <Frame>
         <StackLayout>
             <Entry Placeholder="Login" IsSpellCheckEnabled="False" />
+            <Entry Placeholder="Email" Keyboard="Email" IsSpellCheckEnabled="False">
+                <Entry.Behaviors>
+                    <behavior:EmailValidationBehavior />
+                </Entry.Behaviors>
+            </Entry>
             <Entry Placeholder="Password" IsPassword="True" />
-            <Entry Placeholder="Re-Password" IsPassword="True" />
             <Entry Placeholder="First Name" IsSpellCheckEnabled="False" />
             <Entry Placeholder="Last Name" IsSpellCheckEnabled="False" />
             <DatePicker />

@@ -5,8 +5,9 @@
              x:Class="Dingus.Pages.SignInPage" Title="Dingus">
     <Frame>
         <StackLayout>
-            <Entry Placeholder="Login" IsSpellCheckEnabled="False" />
-            <Entry Placeholder="Password" IsPassword="True" />
+            <Label Text="Incorrect login or password" TextColor="Red" HorizontalTextAlignment="Center" IsVisible="{Binding IsUserNotFound}" />
+            <Entry Text="{Binding SignInUser.Login, Mode=TwoWay}" Placeholder="Login" IsSpellCheckEnabled="False" />
+            <Entry Text="{Binding SignInUser.Password, Mode=TwoWay}" Placeholder="Password" IsPassword="True" />
             <Button Command="{Binding SignInCommand}" Text="Sign In" />
             <Button Command="{Binding SignUpCommand}" Text="Sign Up" />
         </StackLayout>
