@@ -5,17 +5,17 @@
              xmlns:behavior="clr-namespace:Dingus.Behaviors">
     <Frame>
         <StackLayout>
-            <Entry Placeholder="Login" IsSpellCheckEnabled="False" />
-            <Entry Placeholder="Email" Keyboard="Email" IsSpellCheckEnabled="False">
+            <Entry Text="{Binding ActiveUser.Login, Mode=TwoWay}" Placeholder="Login" IsSpellCheckEnabled="False" />
+            <Entry Text="{Binding ActiveUser.Password, Mode=TwoWay}" Placeholder="Password" IsPassword="True" />
+            <Entry Text="{Binding ActiveUser.EMail, Mode=TwoWay}" Placeholder="Email" Keyboard="Email" IsSpellCheckEnabled="False">
                 <Entry.Behaviors>
                     <behavior:EmailValidationBehavior />
                 </Entry.Behaviors>
             </Entry>
-            <Entry Placeholder="Password" IsPassword="True" />
-            <Entry Placeholder="First Name" IsSpellCheckEnabled="False" />
-            <Entry Placeholder="Last Name" IsSpellCheckEnabled="False" />
-            <DatePicker />
-            <Button Text="Sign Up" />
+            <Entry Text="{Binding ActiveUser.Phone, Mode=TwoWay}" Placeholder="Phone" IsSpellCheckEnabled="False" />
+            <Entry Text="{Binding ActiveUser.FirstName, Mode=TwoWay}" Placeholder="First Name" IsSpellCheckEnabled="False" />
+            <Entry Text="{Binding ActiveUser.LastName, Mode=TwoWay}" Placeholder="Last Name" IsSpellCheckEnabled="False" />
+            <Button Text="Sign Up" Command="{Binding SignUpCommand}" />
         </StackLayout>
     </Frame>
 </ContentPage>

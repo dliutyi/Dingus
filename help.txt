@@ -1,0 +1,110 @@
+public ActionResult<string> Get()
+{
+    string json = JsonConvert.SerializeObject(_context.DashboardItems);
+    return json;
+}
+
+// GET api/values/5
+[Authorize]
+[HttpGet("{id}")]
+public ActionResult<string> Get(int id)
+{
+    string accessToken = User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.Name)?.Value;
+    if (accessToken != null && accessToken == id.ToString())
+    {
+        return (from user in _context.Users where user.Id == id select user.LastName).First();
+    }
+    else
+    {
+        return "Access denied";
+    }
+}
+
+//string securityToken = "have_to_use_token_and_save_it_in_database_to_restore_it_after_each_connection";
+//SymmetricSecurityKey symmetricSecurityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(securityToken));
+
+//services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+//    .AddJwtBearer(options =>
+//    {
+//        options.TokenValidationParameters = new TokenValidationParameters
+//        {
+//            ValidateIssuer = true,
+//            ValidateAudience = true,
+//            ValidateIssuerSigningKey = true,
+//            ValidIssuer = "dingus.business",
+//            ValidAudience = "user",
+//            IssuerSigningKey = symmetricSecurityKey
+//        };
+//    });
+
+
+/*IsUserNotFound = !_users.Contains(SignInUser);
+if (!IsUserNotFound)
+{
+    App.Current.MainPage.Navigation.InsertPageBefore(new DashboardPage(), ((NavigationPage)App.Current.MainPage).RootPage);
+    await App.Current.MainPage.Navigation.PopToRootAsync();
+}*/
+
+string token = "";
+
+HttpClient client = new HttpClient();
+client.MaxResponseContentBufferSize = 256000;
+
+Uri uri = new Uri(string.Format("http://10.0.2.2:2456/api/users/auth", String.Empty));
+try
+{
+    var data = new StringContent(JsonConvert.SerializeObject(user.Login), Encoding.UTF8, "application/json");
+    var response = await client.PostAsync(uri, data);
+    if (response.IsSuccessStatusCode)
+    {
+        token = await response.Content.ReadAsStringAsync();
+    }
+    else
+    {
+        token = "IsSuccessStatusCode = false";
+    }
+}
+catch (Exception ex)
+{
+    token = ex.Message;
+}
+
+client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("bearer", token);
+
+string name = "";
+Uri uriAuthed = new Uri(string.Format("http://10.0.2.2:2456/api/values/2", String.Empty));
+try
+{
+    var response = await client.GetAsync(uriAuthed);
+    if (response.IsSuccessStatusCode)
+    {
+        name = await response.Content.ReadAsStringAsync();
+    }
+    else
+    {
+        name = "IsSuccessStatusCode = false";
+    }
+}
+catch (Exception ex)
+{
+    name = ex.Message;
+}
+
+return new User();
+
+
+
+Timer timer = new Timer();
+timer.Elapsed += (Object obj, ElapsedEventArgs e) => 
+{
+    timer.Stop();
+
+    Device.BeginInvokeOnMainThread(new Action(async () =>
+    {
+        App.Current.MainPage.Navigation.InsertPageBefore(new SignInPage(), ((NavigationPage)App.Current.MainPage).RootPage);
+        await App.Current.MainPage.Navigation.PopToRootAsync();
+    }));
+};
+timer.Interval = 1000;
+timer.Enabled = true;
+timer.Start();

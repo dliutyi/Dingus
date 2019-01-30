@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
+﻿using Dingus.ViewModels;
+using System;
 using Xamarin.Forms;
-using Xamarin.Forms.Xaml;
 
 namespace Dingus.Pages
 {
@@ -14,6 +9,22 @@ namespace Dingus.Pages
 		public SignUpPage ()
 		{
 			InitializeComponent ();
-		}
-	}
+
+            UserViewModel userViewModel = new UserViewModel();
+            userViewModel.Validated += UserViewModelValidated;
+            userViewModel.Exception += UserViewModelException;
+            BindingContext = userViewModel;
+        }
+
+        private async void UserViewModelValidated(object sender, EventArgs e)
+        {
+            Navigation.InsertPageBefore(new DashboardPage(), ((NavigationPage)App.Current.MainPage).RootPage);
+            await Navigation.PopToRootAsync();
+        }
+
+        private void UserViewModelException(Exception ex)
+        {
+            DisplayAlert("Exception", ex.Source + " - " + ex.Message, "OK");
+        }
+    }
 }

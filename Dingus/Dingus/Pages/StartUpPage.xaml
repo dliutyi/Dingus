@@ -1,0 +1,24 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Dingus.Pages.StartUpPage" NavigationPage.HasNavigationBar="False"
+             x:Name="Page">
+    <ContentPage.Content>
+        <StackLayout>
+            <Frame>
+                <ListView ItemsSource="{Binding Domains}">
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <ViewCell>
+                                <Button Text="{Binding Value}" IsEnabled="{Binding IsActive}" Clicked="HostItemTapped" />
+                            </ViewCell> 
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+            </Frame>
+            <StackLayout IsVisible="{Binding IsConnecting}" Orientation="Horizontal" VerticalOptions="End">
+                <Label Margin="50" HorizontalOptions="CenterAndExpand" Text="Connecting..." FontSize="16" />
+            </StackLayout>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

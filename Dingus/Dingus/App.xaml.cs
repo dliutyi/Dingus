@@ -1,5 +1,4 @@
-﻿using System;
-using Xamarin.Forms;
+﻿using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
 using Dingus.Pages;
@@ -13,7 +12,7 @@ namespace Dingus
         {
             InitializeComponent();
 
-            MainPage = new NavigationPage(new SignInPage());
+            MainPage = new NavigationPage(new StartUpPage());
         }
 
         protected override void OnStart()

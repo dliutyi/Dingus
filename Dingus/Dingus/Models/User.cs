@@ -4,32 +4,22 @@ using System.Text;
 
 namespace Dingus.Models
 {
-    public class User : IEquatable<User>
+    public class User : ICloneable
     {
+        public int Id { get; set; }
         public string Login { get; set; }
+        public string EMail { get; set; }
+        public string Phone { get; set; }
+        public string Code { get; set; }
         public string Password { get; set; }
+        public string Salt { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
+        public string Token { get; set; }
 
-        public bool Equals(User other)
+        public object Clone()
         {
-            if(!(other is User))
-            {
-                return false;
-            }
-            return this == other;
+            return this.MemberwiseClone();
         }
-
-        public static bool operator ==(User user1, User user2)
-        {
-            return user1.Login == user2.Login && user1.Password == user2.Password;
-        }
-
-        public static bool operator !=(User user1, User user2)
-        {
-            return user1.Login != user2.Login || user1.Password != user2.Password;
-        }
-
-
     }
 }
