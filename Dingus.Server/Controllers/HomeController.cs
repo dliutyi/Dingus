@@ -9,7 +9,12 @@ namespace Dingus.Server.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class AuthController : ControllerBase
+    public class HomeController : ControllerBase
     {
+        [HttpGet]
+        public IActionResult GetBase()
+        {
+            return Ok();
+        }
     }
 }
