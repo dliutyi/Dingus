@@ -23,10 +23,6 @@ namespace Dingus.ViewModels
                 BaseServices baseServices = new BaseServices();
                 foreach(Domain domain in Domains)
                 {
-                    /*Ping ping = new Ping();
-                    PingReply reply = await ping.SendPingAsync(IPAddress.Parse(domain.Address));
-
-                    domain.IsActive = reply.Status == IPStatus.Success;*/
                     domain.IsActive = await baseServices.Connection(domain.ToString());
                 }
                 IsConnecting = false;

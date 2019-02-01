@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Dingus.Models
 {
-    class DashboardItem
+    public class DashboardItem
     {
         public int Id { get; set; }
         public string Name { get; set; }

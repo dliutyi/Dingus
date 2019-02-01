@@ -18,7 +18,7 @@ namespace Dingus.Pages
 
         private async void UserViewModelValidated(object sender, EventArgs e)
         {
-            Navigation.InsertPageBefore(new DashboardPage(), ((NavigationPage)App.Current.MainPage).RootPage);
+            Navigation.InsertPageBefore(new MainPage(), ((NavigationPage)App.Current.MainPage).RootPage);
             await Navigation.PopToRootAsync();
         }
 

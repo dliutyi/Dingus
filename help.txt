@@ -108,3 +108,18 @@ timer.Elapsed += (Object obj, ElapsedEventArgs e) =>
 timer.Interval = 1000;
 timer.Enabled = true;
 timer.Start();
+
+
+<Ui:BindableStackLayout ItemsSource="{Binding Items}" Wrap="Wrap" JustifyContent="Start">
+    <Ui:BindableStackLayout.ItemDataTemplate>
+        <DataTemplate>
+            <Frame WidthRequest="40" Margin="3">
+                <Label Text="{Binding Name}" />
+            </Frame>
+        </DataTemplate>
+    </Ui:BindableStackLayout.ItemDataTemplate>
+</Ui:BindableStackLayout>
+<!--<Label Text="Greetings" HorizontalTextAlignment="Center" VerticalTextAlignment="Center"/>
+<Button Text="Sign Out" Command="{Binding SignOutCommand}" />-->
+
+public static string AlphaVantageKey { get { return "HAJ2LR5JV259PCU8"; } }

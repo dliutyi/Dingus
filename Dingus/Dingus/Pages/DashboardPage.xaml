@@ -3,19 +3,5 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:Ui="clr-namespace:Dingus.UI"
              x:Class="Dingus.Pages.DashboardPage" Title="Dashboard">
-    <Frame>
-        <StackLayout>
-            <Ui:BindableStackLayout ItemsSource="{Binding Items}" Wrap="Wrap" JustifyContent="Start">
-                <Ui:BindableStackLayout.ItemDataTemplate>
-                    <DataTemplate>
-                        <Frame WidthRequest="40" Margin="3">
-                            <Label Text="{Binding Name}" />
-                        </Frame>
-                    </DataTemplate>
-                </Ui:BindableStackLayout.ItemDataTemplate>
-            </Ui:BindableStackLayout>
-            <!--<Label Text="Greetings" HorizontalTextAlignment="Center" VerticalTextAlignment="Center"/>
-            <Button Text="Sign Out" Command="{Binding SignOutCommand}" />-->
-        </StackLayout>
-    </Frame>
+    
 </ContentPage>

@@ -32,20 +32,19 @@ INSERT INTO Country VALUES ('Ukraine', '380'), ('USA', '1'), ('Germany', '49')
 
 
 
-INSERT INTO DashboardItems VALUES ('Buy and sell', 'BuySell'), 
-                          ('Activity', 'Activity'),
-						  ('Wallet', 'Wallet'),
-						  ('Investments', 'Investments'),
-						  ('Recent purchases', 'RecentPurchases'),
-						  ('Stock analytics', 'StockAnalytics'),
+INSERT INTO DashboardItems VALUES ('Dashboard', 'Dashboard'), 
+                          ('Accounts', 'Accounts'),
+						  ('Recent purchases', 'Purchases'),
+						  ('Companies', 'Companies'),
+						  ('Profit calculation', 'Calculation'),
 						  ('Settings', 'Settings'),
 						  ('Sign Out', 'SignOut')
 
 SELECT * FROM Users
-SELECT * FROM DItems
+SELECT * FROM DashboardItems
 
 DROP TABLE Users
-DROP TABLE DItems
+DROP TABLE DashboardItems
 
 DBCC CHECKIDENT('Users', RESEED, 0)
 

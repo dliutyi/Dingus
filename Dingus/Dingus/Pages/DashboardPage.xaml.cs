@@ -8,8 +8,6 @@ namespace Dingus.Pages
         public DashboardPage()
         {
             InitializeComponent();
-
-            BindingContext = new DashboardViewModel();
         }
     }
 }
