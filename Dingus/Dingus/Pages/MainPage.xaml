@@ -2,7 +2,7 @@
 <MasterDetailPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="Dingus.Pages.MainPage"
-             xmlns:pages="clr-namespace:Dingus.Pages">
+             xmlns:pages="clr-namespace:Dingus.Pages" NavigationPage.HasNavigationBar="False">
   <MasterDetailPage.Master>
     <pages:MainMenuMaster x:Name="MasterPage" />
   </MasterDetailPage.Master>

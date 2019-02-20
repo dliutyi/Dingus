@@ -27,6 +27,18 @@ namespace Dingus.Pages
             type.GetMethod(string.Format("{0}Clicked", command))?.Invoke(this, null);
         }
 
+        public void DashboardClicked()
+        {
+            Detail = new NavigationPage(new DashboardPage());
+            IsPresented = false;
+        }
+
+        public void CompaniesClicked()
+        {
+            Detail = new NavigationPage(new CompaniesPage());
+            IsPresented = false;
+        }
+
         public async void SignOutClicked()
         {
             Navigation.InsertPageBefore(new SignInPage(), this);

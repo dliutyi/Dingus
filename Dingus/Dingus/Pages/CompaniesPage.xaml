@@ -1,0 +1,32 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" 
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:behavior="clr-namespace:Dingus.Behaviors"
+             xmlns:converter="clr-namespace:Dingus.Converters"
+             x:Class="Dingus.Pages.CompaniesPage" Title="Companies">
+    <ContentPage.Resources>
+        <converter:StringToBooleanConverter x:Key="StringToBooleanConverter" />
+        <converter:ValueConverterGroup x:Key="InvertStringToBooleanConverter">
+            <converter:StringToBooleanConverter />
+            <converter:InverseBooleanConverter />
+        </converter:ValueConverterGroup>
+    </ContentPage.Resources>
+    <ContentPage.Content>
+        <StackLayout>
+            <Entry Placeholder="Company name" Keyboard="Text" IsSpellCheckEnabled="False" Text="{Binding Search}">
+                <Entry.Behaviors>
+                    <behavior:EventToCommandBehavior EventName="TextChanged" Command="{Binding TextChangeCommand}" />
+                </Entry.Behaviors>
+            </Entry>
+            <Label IsVisible="{Binding Symbol, Converter={StaticResource InvertStringToBooleanConverter}}" Text="{Binding Symbol}" />
+            <ListView  IsVisible="{Binding Symbol, Converter={StaticResource StringToBooleanConverter}}"  
+                    x:Name="CompaniesListView" SeparatorVisibility="None" HasUnevenRows="true"  ItemsSource="{Binding Companies}">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <TextCell Text="{Binding Value}" CommandParameter="{Binding Symbol}" Command="{Binding BindingContext.SelectedCompanyCommand, Source={x:Reference CompaniesListView}}" />
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>
