@@ -43,6 +43,30 @@ namespace Dingus.Services
             }
         }
 
+        public async Task<List<CompanyChart>> GetCompanyChart(string symbol)
+        {
+            HttpClient client = new HttpClient();
+
+            Uri uri = new Uri(string.Format("{0}/{1}/stock/{2}/chart/1y?chartInterval={3}", AppSettings.IexTradingHost, AppSettings.IexTradingVersion, symbol, 6));
+            try
+            {
+                HttpResponseMessage response = await client.GetAsync(uri);
+                if (response.IsSuccessStatusCode)
+                {
+                    string readResponse = await response.Content.ReadAsStringAsync();
+                    return JsonConvert.DeserializeObject<List<CompanyChart>>(readResponse);
+                }
+                else
+                {
+                    throw new HttpRequestException();
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
         public List<Company> GetCompanies(string keyword)
         {
             return AppSettings.Companies.FindAll(delegate(Company company)

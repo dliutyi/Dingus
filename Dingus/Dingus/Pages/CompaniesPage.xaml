@@ -3,13 +3,15 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:behavior="clr-namespace:Dingus.Behaviors"
              xmlns:converter="clr-namespace:Dingus.Converters"
-             x:Class="Dingus.Pages.CompaniesPage" Title="Companies">
+             xmlns:UI="clr-namespace:Dingus.UI"
+             x:Class="Dingus.Pages.CompaniesPage" Title="Companies" x:Name="CompanyContentPage">
     <ContentPage.Resources>
-        <converter:StringToBooleanConverter x:Key="StringToBooleanConverter" />
-        <converter:ValueConverterGroup x:Key="InvertStringToBooleanConverter">
-            <converter:StringToBooleanConverter />
+        <converter:ObjectToBooleanConverter x:Key="ObjectToBooleanConverter" />
+        <converter:ValueConverterGroup x:Key="InvertObjectToBooleanConverter">
+            <converter:ObjectToBooleanConverter />
             <converter:InverseBooleanConverter />
         </converter:ValueConverterGroup>
+        <converter:CompanyDataInChartConverter x:Key="CompanyDataInChartConverter" />
     </ContentPage.Resources>
     <ContentPage.Content>
         <StackLayout>
@@ -18,15 +20,18 @@
                     <behavior:EventToCommandBehavior EventName="TextChanged" Command="{Binding TextChangeCommand}" />
                 </Entry.Behaviors>
             </Entry>
-            <Label IsVisible="{Binding Symbol, Converter={StaticResource InvertStringToBooleanConverter}}" Text="{Binding Symbol}" />
-            <ListView  IsVisible="{Binding Symbol, Converter={StaticResource StringToBooleanConverter}}"  
+            <ListView IsVisible="{Binding SelectedCompany, Converter={StaticResource ObjectToBooleanConverter}}"  
                     x:Name="CompaniesListView" SeparatorVisibility="None" HasUnevenRows="true"  ItemsSource="{Binding Companies}">
                 <ListView.ItemTemplate>
                     <DataTemplate>
-                        <TextCell Text="{Binding Value}" CommandParameter="{Binding Symbol}" Command="{Binding BindingContext.SelectedCompanyCommand, Source={x:Reference CompaniesListView}}" />
+                        <TextCell Text="{Binding Value}" CommandParameter="{Binding .}" Command="{Binding BindingContext.SelectedCompanyCommand, Source={x:Reference CompaniesListView}}" />
                     </DataTemplate>
                 </ListView.ItemTemplate>
             </ListView>
+            <StackLayout x:Name="CompanyDetailLayout" IsVisible="{Binding SelectedCompany, Converter={StaticResource InvertObjectToBooleanConverter}}">
+                <Label Text="{Binding SelectedCompany.Name}" HorizontalTextAlignment="Center" />
+                <UI:BindableLineChart ChartEntries="{Binding SelectedCompany.Chart, Converter={StaticResource CompanyDataInChartConverter}}" LineColor="Blue" HeightRequest="150" />
+            </StackLayout>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

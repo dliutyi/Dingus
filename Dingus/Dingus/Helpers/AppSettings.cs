@@ -27,5 +27,10 @@ namespace Dingus.Helpers
 
         public static string CurrentDomain { get; set; }
         public static User CurrentUser { get; set; }
+
+        public static string IexTradingHost { get { return "https://api.iextrading.com"; } }
+        public static string IexTradingVersion { get { return "1.0"; } }
+
+        public static List<Company> Companies { get; set; }
     }
 }

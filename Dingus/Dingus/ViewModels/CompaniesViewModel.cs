@@ -1,18 +1,20 @@
 ﻿using Dingus.Models;
 using Dingus.Services;
+using Microcharts;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Text;
 using System.Windows.Input;
 using Xamarin.Forms;
+using System.Linq;
 
 namespace Dingus.ViewModels
 {
     class CompaniesViewModel : ViewModelBase
     {
         private string _search;
-        private string _symbol;
+        private Company _company;
         private ObservableCollection<Company> _companies;
 
         public ICommand TextChangeCommand { get; protected set; }
@@ -24,7 +26,7 @@ namespace Dingus.ViewModels
         {
             CompanyService = new CompanyServices();
             TextChangeCommand = new Command(TextChangeCommandHandler);
-            SelectedCompanyCommand = new Command<string>(SelectedCompanyCommandHandler);
+            SelectedCompanyCommand = new Command<Company>(SelectedCompanyCommandHandler);            
         }
 
         public void TextChangeCommandHandler()
@@ -36,7 +38,7 @@ namespace Dingus.ViewModels
 
             try
             {
-                Symbol = null;
+                SelectedCompany = null;
                 Companies = new ObservableCollection<Company>(CompanyService.GetCompanies(Search));
             }
             catch
@@ -45,9 +47,10 @@ namespace Dingus.ViewModels
             }
         }
 
-        public void SelectedCompanyCommandHandler(string companySymbol)
+        public async void SelectedCompanyCommandHandler(Company companySymbol)
         {
-            Symbol = companySymbol;
+            SelectedCompany = companySymbol;
+            SelectedCompany.Chart = await CompanyService.GetCompanyChart(SelectedCompany.Symbol);
         }
 
         public ObservableCollection<Company> Companies
@@ -62,10 +65,10 @@ namespace Dingus.ViewModels
             set { SetProperty(ref _search, value); }
         }
 
-        public string Symbol
+        public Company SelectedCompany
         {
-            get { return _symbol; }
-            set { SetProperty(ref _symbol, value); }
+            get { return _company; }
+            set { SetProperty(ref _company, value); }
         }
     }
 }
