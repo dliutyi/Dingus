@@ -9,7 +9,8 @@ namespace Dingus.Models
 {
     public class Company : INotifyPropertyChanged
     {
-        private List<CompanyChart> _chart;
+        private List<CompanyChart> _charts;
+        private CompanyQuote _quote;
 
         public string Symbol { get; set; }
         public string Name { get; set; }
@@ -19,16 +20,30 @@ namespace Dingus.Models
         public string IexId { get; set; }
 
         public string Value { get { return ToString(); } }
-        public List<CompanyChart> Chart
+
+        public List<CompanyChart> Charts
         {
             get
             {
-                return _chart;
+                return _charts;
             }
             set
             {
-                this._chart = value;
-                OnPropertyChanged("Chart");
+                this._charts = value;
+                OnPropertyChanged("Charts");
+            }
+        }
+
+        public CompanyQuote Quote
+        {
+            get
+            {
+                return _quote;
+            }
+            set
+            {
+                this._quote = value;
+                OnPropertyChanged("Quote");
             }
         }
         
