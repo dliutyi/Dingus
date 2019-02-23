@@ -50,7 +50,8 @@ namespace Dingus.ViewModels
         public async void SelectedCompanyCommandHandler(Company companySymbol)
         {
             SelectedCompany = companySymbol;
-            SelectedCompany.Chart = await CompanyService.GetCompanyChart(SelectedCompany.Symbol);
+            SelectedCompany.Quote = await CompanyService.GetCompanyQuote(SelectedCompany.Symbol);
+            SelectedCompany.Charts = await CompanyService.GetCompanyChart(SelectedCompany.Symbol);
         }
 
         public ObservableCollection<Company> Companies
