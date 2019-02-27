@@ -14,12 +14,10 @@ namespace Dingus.Pages
             BindingContext = _startUpViewModel;
         }
 
-        private async void HostItemTapped(object sender, ClickedEventArgs e)
+        private void HostItemTapped(object sender, ClickedEventArgs e)
         {
             _startUpViewModel.SetHost((sender as Button).Text);
-
-            Navigation.InsertPageBefore(new SignInPage(), ((NavigationPage)App.Current.MainPage).RootPage);
-            await Navigation.PopToRootAsync();
+            App.MainNavigationService.PresentAsMainPage("SignIn");
         }
     }
 }

@@ -16,10 +16,9 @@ namespace Dingus.Pages
             BindingContext = userViewModel;
         }
 
-        private async void UserViewModelValidated(object sender, EventArgs e)
+        private void UserViewModelValidated(object sender, EventArgs e)
         {
-            Navigation.InsertPageBefore(new DashboardPage(), ((NavigationPage)App.Current.MainPage).RootPage);
-            await Navigation.PopToRootAsync();
+            App.MainNavigationService.PresentAsMainPage("Main");
         }
 
         private void UserViewModelException(Exception ex)

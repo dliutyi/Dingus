@@ -16,10 +16,9 @@ namespace Dingus.Pages
             BindingContext = userViewModel;
         }
 
-        private async void UserViewModelValidated(object sender, EventArgs e)
+        private void UserViewModelValidated(object sender, EventArgs e)
         {
-            Navigation.InsertPageBefore(new MainPage(), ((NavigationPage)App.Current.MainPage).RootPage);
-            await Navigation.PopToRootAsync();
+            App.MainNavigationService.PresentAsMainPage("Main");
         }
 
         private void UserViewModelException(Exception ex)
@@ -27,9 +26,9 @@ namespace Dingus.Pages
             DisplayAlert("Exception", ex.Source + " - " + ex.Message, "OK");
         }
 
-        private void SignUpClicked(object sender, EventArgs e)
+        private async void SignUpClicked(object sender, EventArgs e)
         {
-            Navigation.PushAsync(new SignUpPage());
+            await App.MainNavigationService.NavigateTo("SignUp", false);
         }
     }
 }

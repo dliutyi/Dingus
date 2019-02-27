@@ -23,26 +23,14 @@ namespace Dingus.Pages
 
         private void MenuCommandEvent(string command)
         {
-            Type type = this.GetType();
-            type.GetMethod(string.Format("{0}Clicked", command))?.Invoke(this, null);
-        }
+            if(command == "SignOut")
+            {
+                App.MainNavigationService.PresentAsMainPage("SignIn");
+                return;
+            }
 
-        public void DashboardClicked()
-        {
-            Detail = new NavigationPage(new DashboardPage());
+            App.MainNavigationService.NavigateToDetail(command);
             IsPresented = false;
-        }
-
-        public void CompaniesClicked()
-        {
-            Detail = new NavigationPage(new CompaniesPage());
-            IsPresented = false;
-        }
-
-        public async void SignOutClicked()
-        {
-            Navigation.InsertPageBefore(new SignInPage(), this);
-            await Navigation.PopToRootAsync();
         }
 
         private void ListView_ItemSelected(object sender, SelectedItemChangedEventArgs e)
