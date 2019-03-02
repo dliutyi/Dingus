@@ -32,5 +32,7 @@ namespace Dingus.Helpers
         public static string IexTradingVersion { get { return "1.0"; } }
 
         public static List<Company> Companies { get; set; }
+
+        public static string StartUpPage { get { return "StartUp"; } }
     }
 }

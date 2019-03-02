@@ -39,11 +39,12 @@ namespace Dingus.Services
             }
         }
 
-        public void NavigateToDetail(string pageName)
+        public void NavigateToDetail(string pageName, bool isPresented = false)
         {
             Page page = GetPageInstance(pageName);
             MasterDetailPage headPage = (_mainPage.CurrentPage as MasterDetailPage);
             headPage.Detail = GetNavigationPage(page);
+            headPage.IsPresented = isPresented;
         }
 
         public async Task NavigateBack()

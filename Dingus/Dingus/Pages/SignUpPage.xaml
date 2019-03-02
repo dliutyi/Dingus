@@ -1,21 +1,23 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="Dingus.Pages.SignUpPage" Title="Sign Up"
-             xmlns:behavior="clr-namespace:Dingus.Behaviors">
-    <Frame>
-        <StackLayout>
-            <Entry Text="{Binding ActiveUser.Login, Mode=TwoWay}" Placeholder="Login" IsSpellCheckEnabled="False" />
-            <Entry Text="{Binding ActiveUser.Password, Mode=TwoWay}" Placeholder="Password" IsPassword="True" />
-            <Entry Text="{Binding ActiveUser.EMail, Mode=TwoWay}" Placeholder="Email" Keyboard="Email" IsSpellCheckEnabled="False">
-                <Entry.Behaviors>
-                    <behavior:EmailValidationBehavior />
-                </Entry.Behaviors>
-            </Entry>
-            <Entry Text="{Binding ActiveUser.Phone, Mode=TwoWay}" Placeholder="Phone" IsSpellCheckEnabled="False" />
-            <Entry Text="{Binding ActiveUser.FirstName, Mode=TwoWay}" Placeholder="First Name" IsSpellCheckEnabled="False" />
-            <Entry Text="{Binding ActiveUser.LastName, Mode=TwoWay}" Placeholder="Last Name" IsSpellCheckEnabled="False" />
-            <Button Text="Sign Up" Command="{Binding SignUpCommand}" />
-        </StackLayout>
-    </Frame>
+             xmlns:behavior="clr-namespace:Dingus.Behaviors"
+             xmlns:viewmodel="clr-namespace:Dingus.ViewModels"
+             x:Class="Dingus.Pages.SignUpPage" Title="Sign Up">
+    <ContentPage.BindingContext>
+        <viewmodel:UserViewModel />
+    </ContentPage.BindingContext>
+    <StackLayout Margin="20">
+        <Entry Text="{Binding ActiveUser.Login, Mode=TwoWay}" Placeholder="Login" IsSpellCheckEnabled="False" />
+        <Entry Text="{Binding ActiveUser.Password, Mode=TwoWay}" Placeholder="Password" IsPassword="True" />
+        <Entry Text="{Binding ActiveUser.EMail, Mode=TwoWay}" Placeholder="Email" Keyboard="Email" IsSpellCheckEnabled="False">
+            <Entry.Behaviors>
+                <behavior:EmailValidationBehavior />
+            </Entry.Behaviors>
+        </Entry>
+        <Entry Text="{Binding ActiveUser.Phone, Mode=TwoWay}" Placeholder="Phone" IsSpellCheckEnabled="False" />
+        <Entry Text="{Binding ActiveUser.FirstName, Mode=TwoWay}" Placeholder="First Name" IsSpellCheckEnabled="False" />
+        <Entry Text="{Binding ActiveUser.LastName, Mode=TwoWay}" Placeholder="Last Name" IsSpellCheckEnabled="False" />
+        <Button Text="Sign Up" Command="{Binding SignUpCommand}" CommandParameter="Main" />
+    </StackLayout>
 </ContentPage>

@@ -1,13 +1,17 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:viewmodel="clr-namespace:Dingus.ViewModels"
              x:Class="Dingus.Pages.MainMenuMaster"
              Title="Master">
-  <StackLayout>
+    <ContentPage.BindingContext>
+        <viewmodel:MenuViewModel />
+    </ContentPage.BindingContext>
+    <StackLayout>
         <ListView x:Name="MenuItemsListView"
-              SeparatorVisibility="None"
-              HasUnevenRows="true"
-              ItemsSource="{Binding Items}">
+                SeparatorVisibility="None"
+                HasUnevenRows="true"
+                ItemsSource="{Binding Items}">
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <TextCell Text="{Binding Name}" CommandParameter="{Binding Alias}" Command="{Binding BindingContext.MenuItemCommand, Source={x:Reference MenuItemsListView}}" />

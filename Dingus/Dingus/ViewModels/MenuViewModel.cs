@@ -1,27 +1,24 @@
-﻿using Dingus.Pages;
-using Dingus.Models;
-using System;
+﻿using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using System.Windows.Input;
+using System.Reflection;
 using Xamarin.Forms;
 using Dingus.Services;
-using System.Threading.Tasks;
 using Dingus.Helpers;
+using Dingus.Models;
 
 namespace Dingus.ViewModels
 {
-    public delegate void MenuCommandHandler(string command);
-
     public class MenuViewModel : ViewModelBase
     {
-        public List<DashboardItem> _items;
+        private List<DashboardItem> _items;
 
-        public ICommand MenuItemCommand { protected set; get; }
-        public event MenuCommandHandler MenuCommandEvent;
+        public ICommand MenuItemCommand { get; private set; }
 
         public MenuViewModel()
         {
-            InitializeCommands();
+            MenuItemCommand = new Command<string>(MenuItemCommandHandler);
             
             Task.Run(new Action(async () => 
             {
@@ -30,21 +27,24 @@ namespace Dingus.ViewModels
             }));
         }
 
-        public void InitializeCommands()
-        {
-            MenuItemCommand = new Command<string>(MenuItemCommandHandler);
-        }
-
-        public void MenuItemCommandHandler(string commandParameter)
+        private void MenuItemCommandHandler(string itemName)
         {
             Type type = this.GetType();
-            type.GetMethod(string.Format("{0}CommandHandler", commandParameter))?.Invoke(this, null);
-            MenuCommandEvent?.Invoke(commandParameter);
+            MethodInfo method = type.GetMethod(string.Format("{0}CommandHandler", itemName));
+            if (method == null)
+            {
+                App.MainNavigationService.NavigateToDetail(itemName);
+            }
+            else
+            {
+                method.Invoke(this, null);
+            }
         }
 
-        public void SignOutCommandHandler()
+        public async void SignOutCommandHandler()
         {
             AppSettings.CurrentUser = null;
+            await App.MainNavigationService.NavigateBack();
         }
 
         public List<DashboardItem> Items

@@ -1,8 +1,8 @@
 ﻿using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
-using Dingus.Pages;
 using Dingus.Services;
+using Dingus.Helpers;
 
 [assembly: XamlCompilation(XamlCompilationOptions.Compile)]
 namespace Dingus
@@ -16,13 +16,10 @@ namespace Dingus
             InitializeComponent();
             
             MainNavigationService.MainPageChangedEvent += MainPageChangedEvent;
-            MainNavigationService.PresentAsMainPage("StartUp");
+            MainNavigationService.PresentAsMainPage(AppSettings.StartUpPage);
         }
 
-        private void MainPageChangedEvent(NavigationPage page)
-        {
-            MainPage = page;
-        }
+        private void MainPageChangedEvent(NavigationPage page) => MainPage = page;
 
         protected override void OnStart()
         {

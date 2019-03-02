@@ -3,13 +3,17 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:behavior="clr-namespace:Dingus.Behaviors"
              xmlns:converter="clr-namespace:Dingus.Converters"
+             xmlns:viewmodel="clr-namespace:Dingus.ViewModels"
              xmlns:UI="clr-namespace:Dingus.UI"
              x:Class="Dingus.Pages.CompaniesPage" Title="Companies" x:Name="CompanyContentPage">
+    <ContentPage.BindingContext>
+        <viewmodel:CompaniesViewModel />
+    </ContentPage.BindingContext>
     <ContentPage.Resources>
         <Style TargetType="Label">
             <Setter Property="TextColor" Value="Black" />
         </Style>
-        
+
         <converter:ObjectToBooleanConverter x:Key="ObjectToBooleanConverter" />
         <converter:ValueConverterGroup x:Key="InvertObjectToBooleanConverter">
             <converter:ObjectToBooleanConverter />
@@ -17,60 +21,58 @@
         </converter:ValueConverterGroup>
         <converter:CompanyDataInChartConverter x:Key="CompanyDataInChartConverter" />
     </ContentPage.Resources>
-    <ContentPage.Content>
-        <StackLayout>
-            <Frame Padding="5,0,5,5">
-                <StackLayout>
-                    <Entry Placeholder="Company name" Keyboard="Text" IsSpellCheckEnabled="False" Text="{Binding Search}">
-                        <Entry.Behaviors>
-                            <behavior:EventToCommandBehavior EventName="TextChanged" Command="{Binding TextChangeCommand}" />
-                        </Entry.Behaviors>
-                    </Entry>
-                    <ListView IsVisible="{Binding SelectedCompany, Converter={StaticResource ObjectToBooleanConverter}}"  
+    <StackLayout>
+        <Frame Padding="5,0,5,5">
+            <StackLayout>
+                <Entry Placeholder="Company name" Keyboard="Text" IsSpellCheckEnabled="False" Text="{Binding Search}">
+                    <Entry.Behaviors>
+                        <behavior:EventToCommandBehavior EventName="TextChanged" Command="{Binding TextChangeCommand}" />
+                    </Entry.Behaviors>
+                </Entry>
+                <ListView IsVisible="{Binding SelectedCompany, Converter={StaticResource ObjectToBooleanConverter}}"  
                     x:Name="CompaniesListView" SeparatorVisibility="None" HasUnevenRows="true"  ItemsSource="{Binding Companies}">
-                        <ListView.ItemTemplate>
-                            <DataTemplate>
-                                <TextCell Text="{Binding Value}" CommandParameter="{Binding .}" Command="{Binding BindingContext.SelectedCompanyCommand, Source={x:Reference CompaniesListView}}" />
-                            </DataTemplate>
-                        </ListView.ItemTemplate>
-                    </ListView>
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <TextCell Text="{Binding Value}" CommandParameter="{Binding .}" Command="{Binding BindingContext.SelectedCompanyCommand, Source={x:Reference CompaniesListView}}" />
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+            </StackLayout>
+        </Frame>
+        <StackLayout x:Name="CompanyDetailLayout" IsVisible="{Binding SelectedCompany, Converter={StaticResource InvertObjectToBooleanConverter}}">
+            <Frame Padding="5,10,5,0">
+                <StackLayout>
+                    <Label Text="{Binding SelectedCompany.Name}" HorizontalTextAlignment="Center" />
+                    <UI:BindableLineChart ChartEntries="{Binding SelectedCompany.Charts, Converter={StaticResource CompanyDataInChartConverter}}" LineColor="Blue" PointMode="None" LineSize="3" BackgroundColor="Transparent" HeightRequest="150" />
                 </StackLayout>
             </Frame>
-            <StackLayout x:Name="CompanyDetailLayout" IsVisible="{Binding SelectedCompany, Converter={StaticResource InvertObjectToBooleanConverter}}">
-                <Frame Padding="5,10,5,0">
-                    <StackLayout>
-                        <Label Text="{Binding SelectedCompany.Name}" HorizontalTextAlignment="Center" />
-                        <UI:BindableLineChart ChartEntries="{Binding SelectedCompany.Charts, Converter={StaticResource CompanyDataInChartConverter}}" LineColor="Blue" PointMode="None" LineSize="3" BackgroundColor="Transparent" HeightRequest="150" />
-                    </StackLayout>
-                </Frame>
-                <Frame>
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="6*" />
-                            <ColumnDefinition Width="4*" />
-                        </Grid.ColumnDefinitions>
-                        <Grid.RowDefinitions>
-                            <RowDefinition />
-                            <RowDefinition />
-                            <RowDefinition />
-                            <RowDefinition />
-                            <RowDefinition />
-                        </Grid.RowDefinitions>
-                        <Label Grid.Row="0" Grid.Column="0" Text="Latest date" />
-                        <Label Grid.Row="1" Grid.Column="0" Text="Current price" />
-                        <Label Grid.Row="2" Grid.Column="0" Text="Open" />
-                        <Label Grid.Row="3" Grid.Column="0" Text="Close" />
-                        <Label Grid.Row="4" Grid.Column="0" Text="Daily High" />
-                        <Label Grid.Row="5" Grid.Column="0" Text="Daily Low" />
-                        <Label Grid.Row="0" Grid.Column="1" Text="{Binding SelectedCompany.Quote.Date, StringFormat='{}{0:MM/dd/yyyy}'}" />
-                        <Label Grid.Row="1" Grid.Column="1" Text="{Binding SelectedCompany.Quote.Price, StringFormat='{}{0:0.00}'}" />
-                        <Label Grid.Row="2" Grid.Column="1" Text="{Binding SelectedCompany.Quote.Open, StringFormat='{}{0:0.00}'}" />
-                        <Label Grid.Row="3" Grid.Column="1" Text="{Binding SelectedCompany.Quote.Close, StringFormat='{}{0:0.00}'}" />
-                        <Label Grid.Row="4" Grid.Column="1" Text="{Binding SelectedCompany.Quote.High, StringFormat='{}{0:0.00}'}" />
-                        <Label Grid.Row="5" Grid.Column="1" Text="{Binding SelectedCompany.Quote.Low, StringFormat='{}{0:0.00}'}" />
-                    </Grid>
-                </Frame>
-            </StackLayout>
+            <Frame>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="6*" />
+                        <ColumnDefinition Width="4*" />
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition />
+                        <RowDefinition />
+                        <RowDefinition />
+                        <RowDefinition />
+                        <RowDefinition />
+                    </Grid.RowDefinitions>
+                    <Label Grid.Row="0" Grid.Column="0" Text="Latest date" />
+                    <Label Grid.Row="1" Grid.Column="0" Text="Current price" />
+                    <Label Grid.Row="2" Grid.Column="0" Text="Open" />
+                    <Label Grid.Row="3" Grid.Column="0" Text="Close" />
+                    <Label Grid.Row="4" Grid.Column="0" Text="Daily High" />
+                    <Label Grid.Row="5" Grid.Column="0" Text="Daily Low" />
+                    <Label Grid.Row="0" Grid.Column="1" Text="{Binding SelectedCompany.Quote.Date, StringFormat='{}{0:MM/dd/yyyy}'}" />
+                    <Label Grid.Row="1" Grid.Column="1" Text="{Binding SelectedCompany.Quote.Price, StringFormat='{}{0:0.00}'}" />
+                    <Label Grid.Row="2" Grid.Column="1" Text="{Binding SelectedCompany.Quote.Open, StringFormat='{}{0:0.00}'}" />
+                    <Label Grid.Row="3" Grid.Column="1" Text="{Binding SelectedCompany.Quote.Close, StringFormat='{}{0:0.00}'}" />
+                    <Label Grid.Row="4" Grid.Column="1" Text="{Binding SelectedCompany.Quote.High, StringFormat='{}{0:0.00}'}" />
+                    <Label Grid.Row="5" Grid.Column="1" Text="{Binding SelectedCompany.Quote.Low, StringFormat='{}{0:0.00}'}" />
+                </Grid>
+            </Frame>
         </StackLayout>
-    </ContentPage.Content>
+    </StackLayout>
 </ContentPage>

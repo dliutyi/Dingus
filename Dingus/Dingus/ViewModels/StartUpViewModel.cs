@@ -1,22 +1,28 @@
-﻿using Dingus.Helpers;
+﻿using System.Collections.ObjectModel;
+using System.Threading.Tasks;
+using System.Windows.Input;
+using Xamarin.Forms;
+using Dingus.Helpers;
 using Dingus.Models;
 using Dingus.Services;
-using System.Collections.ObjectModel;
-using System.Net;
-using System.Net.NetworkInformation;
-using System.Threading.Tasks;
 
 namespace Dingus.ViewModels
 {
     class StartUpViewModel : ViewModelBase
     {
-        public bool _isConnecting;
-        public ObservableCollection<Domain> _domains;
+        private bool _isConnecting;
+        private ObservableCollection<Domain> _domains;
+        
+        public ICommand NavigateCommand { get; private set; }
+        public ICommand SelectedHostCommand { get; private set; }
         
         public StartUpViewModel()
         {
             IsConnecting = true;
+
             Domains = new ObservableCollection<Domain>(AppSettings.Domains);
+            NavigateCommand = new Command<string>(NavigateCommandHandler);
+            SelectedHostCommand = new Command<string>(SelectedHostCommandHandler);
 
             Task.Run(async () => 
             {
@@ -29,10 +35,8 @@ namespace Dingus.ViewModels
             });
         }
 
-        public void SetHost(string domain)
-        {
-            AppSettings.CurrentDomain = domain;
-        }
+        private void NavigateCommandHandler(string pageName) => App.MainNavigationService.PresentAsMainPage(pageName);
+        private void SelectedHostCommandHandler(string domain) => AppSettings.CurrentDomain = domain;
 
         public ObservableCollection<Domain> Domains
         {

@@ -1,13 +1,8 @@
-﻿using Dingus.Models;
-using Dingus.Services;
-using Microcharts;
-using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Text;
+﻿using System.Collections.ObjectModel;
 using System.Windows.Input;
 using Xamarin.Forms;
-using System.Linq;
+using Dingus.Models;
+using Dingus.Services;
 
 namespace Dingus.ViewModels
 {
@@ -17,8 +12,8 @@ namespace Dingus.ViewModels
         private Company _company;
         private ObservableCollection<Company> _companies;
 
-        public ICommand TextChangeCommand { get; protected set; }
-        public ICommand SelectedCompanyCommand { get; protected set; }
+        public ICommand TextChangeCommand { get; private set; }
+        public ICommand SelectedCompanyCommand { get; private set; }
 
         private CompanyServices CompanyService { get; set; }
 
@@ -29,7 +24,7 @@ namespace Dingus.ViewModels
             SelectedCompanyCommand = new Command<Company>(SelectedCompanyCommandHandler);            
         }
 
-        public void TextChangeCommandHandler()
+        private void TextChangeCommandHandler()
         {
             if(string.IsNullOrWhiteSpace(Search) == true)
             {
@@ -43,11 +38,11 @@ namespace Dingus.ViewModels
             }
             catch
             {
-                //await App.Current.MainPage.DisplayAlert("Exception", ex.Message, "OK");
+                return;
             }
         }
 
-        public async void SelectedCompanyCommandHandler(Company companySymbol)
+        private async void SelectedCompanyCommandHandler(Company companySymbol)
         {
             SelectedCompany = companySymbol;
             SelectedCompany.Quote = await CompanyService.GetCompanyQuote(SelectedCompany.Symbol);

@@ -1,24 +1,30 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="Dingus.Pages.StartUpPage" NavigationPage.HasNavigationBar="False"
-             x:Name="Page">
-    <ContentPage.Content>
-        <StackLayout>
-            <Frame>
-                <ListView ItemsSource="{Binding Domains}">
-                    <ListView.ItemTemplate>
-                        <DataTemplate>
-                            <ViewCell>
-                                <Button Text="{Binding Value}" IsEnabled="{Binding IsActive}" Clicked="HostItemTapped" />
-                            </ViewCell> 
-                        </DataTemplate>
-                    </ListView.ItemTemplate>
-                </ListView>
-            </Frame>
-            <StackLayout IsVisible="{Binding IsConnecting}" Orientation="Horizontal" VerticalOptions="End">
-                <Label Margin="50" HorizontalOptions="CenterAndExpand" Text="Connecting..." FontSize="16" />
-            </StackLayout>
+             xmlns:behavior="clr-namespace:Dingus.Behaviors"
+             xmlns:viewmodel="clr-namespace:Dingus.ViewModels"
+             x:Class="Dingus.Pages.StartUpPage" x:Name="Page"
+             NavigationPage.HasNavigationBar="False">
+    <ContentPage.BindingContext>
+        <viewmodel:StartUpViewModel />
+    </ContentPage.BindingContext>
+    <StackLayout>
+        <ListView ItemsSource="{Binding Domains}" x:Name="DomainsListView" Margin="20">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <ViewCell>
+                        <Button Text="{Binding Value}" IsEnabled="{Binding IsActive}">
+                            <Button.Behaviors>
+                                <behavior:EventToCommandBehavior EventName="Clicked" CommandParameter="{Binding Value}" Command="{Binding BindingContext.SelectedHostCommand, Source={x:Reference DomainsListView}}" />
+                                <behavior:EventToCommandBehavior EventName="Clicked" CommandParameter="SignIn" Command="{Binding BindingContext.NavigateCommand, Source={x:Reference DomainsListView}}" />
+                            </Button.Behaviors>
+                        </Button>
+                    </ViewCell>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+        <StackLayout IsVisible="{Binding IsConnecting}" Orientation="Horizontal" VerticalOptions="End">
+            <Label Margin="50" HorizontalOptions="CenterAndExpand" Text="Connecting..." FontSize="16" />
         </StackLayout>
-    </ContentPage.Content>
+    </StackLayout>
 </ContentPage>

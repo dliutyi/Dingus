@@ -1,15 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Windows.Input;
+using Xamarin.Forms;
 using Dingus.Helpers;
 using Dingus.Models;
 using Dingus.Services;
-using Xamarin.Forms;
 
 namespace Dingus.ViewModels
 {
-    public delegate void ExceptionHandler(Exception ex);
-
     class UserViewModel : ViewModelBase
     {
         private bool _isUserNotFound;
@@ -19,11 +16,9 @@ namespace Dingus.ViewModels
 
         private UserServices UserService { get; set; }
 
-        public ICommand SignInCommand { get; protected set; }
-        public ICommand SignUpCommand { get; protected set; }
-
-        public event EventHandler Validated;
-        public event ExceptionHandler Exception;
+        public ICommand NavigateCommand { get; private set; }
+        public ICommand SignInCommand { get; private set; }
+        public ICommand SignUpCommand { get; private set; }
 
         public UserViewModel()
         {
@@ -31,38 +26,46 @@ namespace Dingus.ViewModels
 
             ActiveUser = new User();
             UserService = new UserServices();
+
+            IsUserNotFound = false;
         }
 
-        public void InitializeCommands()
+        private void InitializeCommands()
         {
-            SignInCommand = new Command(SignInCommandHandler);
-            SignUpCommand = new Command(SignUpCommandHandler);
+            NavigateCommand = new Command<string>(NavigateCommandHandler);
+            SignInCommand = new Command<string>(SignInCommandHandler);
+            SignUpCommand = new Command<string>(SignUpCommandHandler);
         }
 
-        public async void SignInCommandHandler()
+        private async void NavigateCommandHandler(string pageName) => await App.MainNavigationService.NavigateTo(pageName, false);
+
+        private async void SignInCommandHandler(string pageName)
         {
             try
             {
                 AppSettings.CurrentUser = await UserService.Auth(ActiveUser);
-                Validated?.Invoke(this, new EventArgs());
             }
-            catch(Exception ex)
+            catch
             {
-                Exception?.Invoke(ex);
+                IsUserNotFound = true;
+                return;
             }
+
+            await App.MainNavigationService.NavigateTo(pageName, false);
         }
 
-        public async void SignUpCommandHandler()
+        private async void SignUpCommandHandler(string pageName)
         {
             try
             {
                 AppSettings.CurrentUser = await UserService.Register(ActiveUser);
-                Validated?.Invoke(this, new EventArgs());
             }
-            catch(Exception ex)
+            catch
             {
-                Exception?.Invoke(ex);
+                return;
             }
+
+            await App.MainNavigationService.NavigateTo(pageName, false);
         }
 
         public bool IsUserNotFound
@@ -83,5 +86,4 @@ namespace Dingus.ViewModels
             set { SetProperty(ref _users, value); }
         }
     }
-
 }

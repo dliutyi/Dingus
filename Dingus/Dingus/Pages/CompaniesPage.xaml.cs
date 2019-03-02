@@ -1,22 +1,9 @@
-﻿using Dingus.ViewModels;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-using Xamarin.Forms;
-using Xamarin.Forms.Xaml;
+﻿using Xamarin.Forms;
 
 namespace Dingus.Pages
 {
     public partial class CompaniesPage : ContentPage
     {
-        public CompaniesPage()
-        {
-            InitializeComponent();
-
-            BindingContext = new CompaniesViewModel();
-        }
+        public CompaniesPage() => InitializeComponent();
     }
 }

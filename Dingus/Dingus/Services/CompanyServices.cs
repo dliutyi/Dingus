@@ -4,15 +4,17 @@ using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Net.Http;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Dingus.Services
 {
     class CompanyServices
     {
+        private JsonSerializerSettings _jsonSettings;
+
         public CompanyServices()
         {
+            _jsonSettings = new JsonSerializerSettings() { NullValueHandling = NullValueHandling.Ignore };
             Task.Run(async () => 
             {
                 AppSettings.Companies = await GetCompanies();
@@ -30,7 +32,7 @@ namespace Dingus.Services
                 if (response.IsSuccessStatusCode)
                 {
                     string readResponse = await response.Content.ReadAsStringAsync();
-                    return JsonConvert.DeserializeObject<List<Company>>(readResponse);
+                    return JsonConvert.DeserializeObject<List<Company>>(readResponse, _jsonSettings);
                 }
                 else
                 {
@@ -54,7 +56,7 @@ namespace Dingus.Services
                 if (response.IsSuccessStatusCode)
                 {
                     string readResponse = await response.Content.ReadAsStringAsync();
-                    return JsonConvert.DeserializeObject<List<CompanyChart>>(readResponse);
+                    return JsonConvert.DeserializeObject<List<CompanyChart>>(readResponse, _jsonSettings);
                 }
                 else
                 {
@@ -78,7 +80,7 @@ namespace Dingus.Services
                 if (response.IsSuccessStatusCode)
                 {
                     string readResponse = await response.Content.ReadAsStringAsync();
-                    return JsonConvert.DeserializeObject<CompanyQuote>(readResponse);
+                    return JsonConvert.DeserializeObject<CompanyQuote>(readResponse, _jsonSettings);
                 }
                 else
                 {

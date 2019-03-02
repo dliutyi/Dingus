@@ -1,15 +1,16 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:local="clr-namespace:Dingus"
+             xmlns:viewmodel="clr-namespace:Dingus.ViewModels"
              x:Class="Dingus.Pages.SignInPage" Title="Dingus">
-    <Frame>
-        <StackLayout>
-            <Label Text="Incorrect login or password" TextColor="Red" HorizontalTextAlignment="Center" IsVisible="{Binding IsUserNotFound}" />
-            <Entry Text="{Binding ActiveUser.Login, Mode=TwoWay}" Placeholder="Login" IsSpellCheckEnabled="False" />
-            <Entry Text="{Binding ActiveUser.Password, Mode=TwoWay}" Placeholder="Password" IsPassword="True" />
-            <Button Text="Sign In" Command="{Binding SignInCommand}" />
-            <Button Text="Sign Up" Clicked="SignUpClicked" />
-        </StackLayout>
-    </Frame>
+    <ContentPage.BindingContext>
+        <viewmodel:UserViewModel />
+    </ContentPage.BindingContext>
+    <StackLayout Margin="20">
+        <Label Text="Invalid login or password" TextColor="Red" HorizontalTextAlignment="Center" IsVisible="{Binding IsUserNotFound}" />
+        <Entry Text="{Binding ActiveUser.Login, Mode=TwoWay}" Placeholder="Login" IsSpellCheckEnabled="False" />
+        <Entry Text="{Binding ActiveUser.Password, Mode=TwoWay}" Placeholder="Password" IsPassword="True" />
+        <Button Text="Sign In" Command="{Binding SignInCommand}" CommandParameter="Main" />
+        <Button Text="Sign Up" Command="{Binding NavigateCommand}" CommandParameter="SignUp" />
+    </StackLayout>
 </ContentPage>
