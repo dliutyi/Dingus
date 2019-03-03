@@ -11,17 +11,11 @@ namespace Dingus.Helpers
         {
             get
             {
-                List<Domain> domains = new List<Domain>();
-                if (Device.RuntimePlatform == Device.Android)
+                return new List<Domain>()
                 {
-                    domains.Add(new Domain() { Protocol = DomainType.HTTP, Address = "10.0.2.2", Port = "2456" });
-                }
-                else if(Device.RuntimePlatform == Device.iOS)
-                {
-                    domains.Add(new Domain() { Protocol = DomainType.HTTP, Address = "localhost", Port = "2456" });
-                }
-                domains.Add(new Domain() { Protocol = DomainType.HTTP, Address = "192.168.0.104", Port = "2314" });
-                return domains;
+                    new Domain() { Protocol = DomainType.HTTP, Port = "2456", Address = (Device.RuntimePlatform == Device.Android) ? "10.0.2.2" : "localhost" },
+                    new Domain() { Protocol = DomainType.HTTP, Port = "2314", Address = "192.168.0.104" }
+                };
             }
         }
 
@@ -33,6 +27,7 @@ namespace Dingus.Helpers
 
         public static List<Company> Companies { get; set; }
 
+        public static int BaseServerTimeout { get { return 5; } }
         public static string StartUpPage { get { return "StartUp"; } }
     }
 }

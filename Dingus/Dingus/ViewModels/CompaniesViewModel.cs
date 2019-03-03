@@ -26,7 +26,7 @@ namespace Dingus.ViewModels
 
         private void TextChangeCommandHandler()
         {
-            if(string.IsNullOrWhiteSpace(Search) == true)
+            if(string.IsNullOrWhiteSpace(Search))
             {
                 return;
             }

@@ -1,104 +1,41 @@
-﻿using Dingus.Helpers;
-using Dingus.Models;
-using Newtonsoft.Json;
-using System;
+﻿using System.Threading.Tasks;
 using System.Collections.Generic;
-using System.Net.Http;
-using System.Threading.Tasks;
+using Newtonsoft.Json;
+using Dingus.Models;
+using Dingus.Helpers;
 
 namespace Dingus.Services
 {
     class CompanyServices
     {
+        private NetServices _service;
         private JsonSerializerSettings _jsonSettings;
 
         public CompanyServices()
         {
+            _service = new NetServices();
             _jsonSettings = new JsonSerializerSettings() { NullValueHandling = NullValueHandling.Ignore };
-            Task.Run(async () => 
-            {
-                AppSettings.Companies = await GetCompanies();
-            });
+            Task.Run(async () => AppSettings.Companies = await GetCompanies());
         }
 
         public async Task<List<Company>> GetCompanies()
         {
-            HttpClient client = new HttpClient();
-
-            Uri uri = new Uri(string.Format("{0}/{1}/ref-data/symbols", AppSettings.IexTradingHost, AppSettings.IexTradingVersion));
-            try
-            {
-                HttpResponseMessage response = await client.GetAsync(uri);
-                if (response.IsSuccessStatusCode)
-                {
-                    string readResponse = await response.Content.ReadAsStringAsync();
-                    return JsonConvert.DeserializeObject<List<Company>>(readResponse, _jsonSettings);
-                }
-                else
-                {
-                    throw new HttpRequestException();
-                }
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
+            return await _service.GetDeserializedObject<List<Company>>($"{AppSettings.IexTradingHost}/{AppSettings.IexTradingVersion}/ref-data/symbols", _jsonSettings);
         }
 
         public async Task<List<CompanyChart>> GetCompanyChart(string symbol, int interval = 7)
         {
-            HttpClient client = new HttpClient();
-            
-            Uri uri = new Uri(string.Format("{0}/{1}/stock/{2}/chart/1y?chartInterval={3}", AppSettings.IexTradingHost, AppSettings.IexTradingVersion, symbol, interval));
-            try
-            {
-                HttpResponseMessage response = await client.GetAsync(uri);
-                if (response.IsSuccessStatusCode)
-                {
-                    string readResponse = await response.Content.ReadAsStringAsync();
-                    return JsonConvert.DeserializeObject<List<CompanyChart>>(readResponse, _jsonSettings);
-                }
-                else
-                {
-                    throw new HttpRequestException();
-                }
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
+            return await _service.GetDeserializedObject<List<CompanyChart>>($"{AppSettings.IexTradingHost}/{AppSettings.IexTradingVersion}/stock/{symbol}/chart/1y?chartInterval={interval}", _jsonSettings);
         }
 
         public async Task<CompanyQuote> GetCompanyQuote(string symbol)
         {
-            HttpClient client = new HttpClient();
-            
-            Uri uri = new Uri(string.Format("{0}/{1}/stock/{2}/quote", AppSettings.IexTradingHost, AppSettings.IexTradingVersion, symbol));
-            try
-            {
-                HttpResponseMessage response = await client.GetAsync(uri);
-                if (response.IsSuccessStatusCode)
-                {
-                    string readResponse = await response.Content.ReadAsStringAsync();
-                    return JsonConvert.DeserializeObject<CompanyQuote>(readResponse, _jsonSettings);
-                }
-                else
-                {
-                    throw new HttpRequestException();
-                }
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
+            return await _service.GetDeserializedObject<CompanyQuote>($"{AppSettings.IexTradingHost}/{AppSettings.IexTradingVersion}/stock/{symbol}/quote", _jsonSettings);
         }
 
         public List<Company> GetCompanies(string keyword)
         {
-            return AppSettings.Companies.FindAll(delegate(Company company)
-            {
-                return company.Name.ToUpper().Contains(keyword.ToUpper()) || company.Symbol.ToUpper().Contains(keyword.ToUpper());
-            });
+            return AppSettings.Companies.FindAll((Company company) => company.Name.ToUpper().Contains(keyword.ToUpper()) || company.Symbol.ToUpper().Contains(keyword.ToUpper()));
         }
     }
 }

@@ -1,23 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Net.Http;
-using System.Text;
+﻿using System.Net.Http;
 using System.Threading.Tasks;
+using Dingus.Helpers;
 
 namespace Dingus.Services
 {
     class BaseServices
     {
-        public async Task<bool> Connection(string domain)
+        public async Task<bool> CheckConnection(string domain)
         {
-            HttpClient client = new HttpClient();
-            client.Timeout = TimeSpan.FromSeconds(30);
-            client.MaxResponseContentBufferSize = 256000;
-
-            Uri uri = new Uri(string.Format("{0}/api/home", domain));
+            NetServices service = new NetServices(AppSettings.BaseServerTimeout);
             try
             {
-                HttpResponseMessage response = await client.GetAsync(uri);
+                HttpResponseMessage response = await service.GetResponse($"{domain}/api/home");
                 return response.IsSuccessStatusCode;
             }
             catch

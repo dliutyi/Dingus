@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Windows.Input;
 using Xamarin.Forms;
+using Dingus.Services;
 using Dingus.Helpers;
 using Dingus.Models;
-using Dingus.Services;
 
 namespace Dingus.ViewModels
 {
@@ -44,14 +44,12 @@ namespace Dingus.ViewModels
             try
             {
                 AppSettings.CurrentUser = await UserService.Auth(ActiveUser);
+                await App.MainNavigationService.NavigateTo(pageName, false);
             }
             catch
             {
                 IsUserNotFound = true;
-                return;
             }
-
-            await App.MainNavigationService.NavigateTo(pageName, false);
         }
 
         private async void SignUpCommandHandler(string pageName)
@@ -59,13 +57,12 @@ namespace Dingus.ViewModels
             try
             {
                 AppSettings.CurrentUser = await UserService.Register(ActiveUser);
+                await App.MainNavigationService.NavigateTo(pageName, false);
             }
             catch
             {
                 return;
             }
-
-            await App.MainNavigationService.NavigateTo(pageName, false);
         }
 
         public bool IsUserNotFound

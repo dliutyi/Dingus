@@ -29,7 +29,7 @@ namespace Dingus.ViewModels
                 BaseServices baseServices = new BaseServices();
                 foreach(Domain domain in Domains)
                 {
-                    domain.IsActive = await baseServices.Connection(domain.ToString());
+                    domain.IsActive = await baseServices.CheckConnection(domain.ToString());
                 }
                 IsConnecting = false;
             });
