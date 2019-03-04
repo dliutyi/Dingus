@@ -9,25 +9,22 @@ namespace Dingus.Helpers
     {
         public static List<Domain> Domains
         {
-            get
+            get => new List<Domain>()
             {
-                return new List<Domain>()
-                {
-                    new Domain() { Protocol = DomainType.HTTP, Port = "2456", Address = (Device.RuntimePlatform == Device.Android) ? "10.0.2.2" : "localhost" },
-                    new Domain() { Protocol = DomainType.HTTP, Port = "2314", Address = "192.168.0.104" }
-                };
-            }
+                new Domain() { Protocol = DomainType.Http, Port = "2456", Address = (Device.RuntimePlatform == Device.Android) ? "10.0.2.2" : "localhost" },
+                new Domain() { Protocol = DomainType.Http, Port = "2314", Address = "192.168.0.104" }
+            };
         }
 
         public static string CurrentDomain { get; set; }
         public static User CurrentUser { get; set; }
 
-        public static string IexTradingHost { get { return "https://api.iextrading.com"; } }
-        public static string IexTradingVersion { get { return "1.0"; } }
+        public static string IexTradingHost { get => "https://api.iextrading.com"; }
+        public static string IexTradingVersion { get => "1.0"; }
 
         public static List<Company> Companies { get; set; }
 
-        public static int BaseServerTimeout { get { return 5; } }
-        public static string StartUpPage { get { return "StartUp"; } }
+        public static int BaseServerTimeout { get => 5; }
+        public static string StartUpPage { get => "StartUp"; }
     }
 }

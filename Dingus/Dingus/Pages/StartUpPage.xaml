@@ -13,9 +13,9 @@
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <ViewCell>
-                        <Button Text="{Binding Value}" IsEnabled="{Binding IsActive}">
+                        <Button Text="{Binding StringFormat='{0}'}" IsEnabled="{Binding IsActive}">
                             <Button.Behaviors>
-                                <behavior:EventToCommandBehavior EventName="Clicked" CommandParameter="{Binding Value}" Command="{Binding BindingContext.SelectedHostCommand, Source={x:Reference DomainsListView}}" />
+                                <behavior:EventToCommandBehavior EventName="Clicked" CommandParameter="{Binding StringFormat='{0}'}" Command="{Binding BindingContext.SelectedHostCommand, Source={x:Reference DomainsListView}}" />
                                 <behavior:EventToCommandBehavior EventName="Clicked" CommandParameter="SignIn" Command="{Binding BindingContext.NavigateCommand, Source={x:Reference DomainsListView}}" />
                             </Button.Behaviors>
                         </Button>

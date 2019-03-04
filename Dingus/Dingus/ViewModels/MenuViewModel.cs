@@ -49,8 +49,8 @@ namespace Dingus.ViewModels
 
         public List<DashboardItem> Items
         {
-            get { return _items; }
-            set { SetProperty(ref _items, value); }
+            get => _items;
+            set => SetProperty(ref _items, value);
         }
     }
 }

@@ -67,20 +67,20 @@ namespace Dingus.ViewModels
 
         public bool IsUserNotFound
         {
-            get { return _isUserNotFound; }
-            set { SetProperty(ref _isUserNotFound, value); }
+            get => _isUserNotFound;
+            set => SetProperty(ref _isUserNotFound, value);
         }
 
         public User ActiveUser
         {
-            get { return _user; }
-            set { SetProperty(ref _user, value); }
+            get => _user;
+            set => SetProperty(ref _user, value);
         }
 
         public List<User> Users
         {
-            get { return _users; }
-            set { SetProperty(ref _users, value); }
+            get => _users;
+            set => SetProperty(ref _users, value);
         }
     }
 }

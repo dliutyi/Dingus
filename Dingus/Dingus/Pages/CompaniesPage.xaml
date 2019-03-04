@@ -33,7 +33,7 @@
                     x:Name="CompaniesListView" SeparatorVisibility="None" HasUnevenRows="true"  ItemsSource="{Binding Companies}">
                     <ListView.ItemTemplate>
                         <DataTemplate>
-                            <TextCell Text="{Binding Value}" CommandParameter="{Binding .}" Command="{Binding BindingContext.SelectedCompanyCommand, Source={x:Reference CompaniesListView}}" />
+                            <TextCell Text="{Binding StringFormat='{0}'}" CommandParameter="{Binding .}" Command="{Binding BindingContext.SelectedCompanyCommand, Source={x:Reference CompaniesListView}}" />
                         </DataTemplate>
                     </ListView.ItemTemplate>
                 </ListView>

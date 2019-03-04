@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Dingus.Models
+﻿namespace Dingus.Models
 {
-    public class User : ICloneable
+    public class User
     {
         public int Id { get; set; }
         public string Login { get; set; }
@@ -17,9 +13,6 @@ namespace Dingus.Models
         public string LastName { get; set; }
         public string Token { get; set; }
 
-        public object Clone()
-        {
-            return this.MemberwiseClone();
-        }
+        public object Clone() => this.MemberwiseClone();
     }
 }

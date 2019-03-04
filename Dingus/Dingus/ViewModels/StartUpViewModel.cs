@@ -40,14 +40,14 @@ namespace Dingus.ViewModels
 
         public ObservableCollection<Domain> Domains
         {
-            get { return _domains; }
-            set { SetProperty(ref _domains, value); }
+            get => _domains;
+            set => SetProperty(ref _domains, value);
         }
 
         public bool IsConnecting
         {
-            get { return _isConnecting; }
-            set { SetProperty(ref _isConnecting, value); }
+            get => _isConnecting;
+            set => SetProperty(ref _isConnecting, value);
         }
     }
 }

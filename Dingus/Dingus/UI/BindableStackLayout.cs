@@ -7,8 +7,8 @@ namespace Dingus.UI
     {
         public IEnumerable ItemsSource
         {
-            get { return (IEnumerable)GetValue(ItemsSourceProperty); }
-            set { SetValue(ItemsSourceProperty, value); }
+            get => (IEnumerable)GetValue(ItemsSourceProperty);
+            set => SetValue(ItemsSourceProperty, value);
         }
 
         public static readonly BindableProperty ItemsSourceProperty =
@@ -17,8 +17,8 @@ namespace Dingus.UI
 
         public DataTemplate ItemDataTemplate
         {
-            get { return (DataTemplate)GetValue(ItemDataTemplateProperty); }
-            set { SetValue(ItemDataTemplateProperty, value); }
+            get => (DataTemplate)GetValue(ItemDataTemplateProperty);
+            set => SetValue(ItemDataTemplateProperty, value);
         }
 
         public static readonly BindableProperty ItemDataTemplateProperty =

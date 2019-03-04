@@ -17,8 +17,8 @@ namespace Dingus.UI
 
         public IEnumerable<Microcharts.Entry> ChartEntries
         {
-            get { return (IEnumerable<Microcharts.Entry>)GetValue(ChartEntriesProperty); }
-            set { SetValue(ChartEntriesProperty, value); }
+            get => (IEnumerable<Microcharts.Entry>)GetValue(ChartEntriesProperty);
+            set => SetValue(ChartEntriesProperty, value);
         }
 
         public new Color BackgroundColor { get; set; }

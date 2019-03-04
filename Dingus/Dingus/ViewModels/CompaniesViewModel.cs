@@ -51,20 +51,20 @@ namespace Dingus.ViewModels
 
         public ObservableCollection<Company> Companies
         {
-            get { return _companies; }
-            set { SetProperty(ref _companies, value); }
+            get => _companies;
+            set => SetProperty(ref _companies, value);
         }
 
         public string Search
         {
-            get { return _search; }
-            set { SetProperty(ref _search, value); }
+            get => _search;
+            set => SetProperty(ref _search, value);
         }
 
         public Company SelectedCompany
         {
-            get { return _company; }
-            set { SetProperty(ref _company, value); }
+            get => _company;
+            set => SetProperty(ref _company, value);
         }
     }
 }
